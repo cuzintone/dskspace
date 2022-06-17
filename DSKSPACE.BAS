@@ -57,8 +57,7 @@ FUNCTION GetDiskFree& (Drive$)
   Regs.dx = (ASC(Drive$) - ASC("A") + 1)
   CALL MSDOS(Regs, Regs)
   IF Regs.ax <> &HFFFF THEN
-    Freespace = Regs.cx
-    GetDiskFree = Freespace * Regs.ax * Regs.bx
+    GetDiskFree = (Regs.cx * 1!) * (Regs.ax * 1!) * (Regs.bx * 1!)
  ELSE
      GetDiskFree = 0
   END IF
@@ -79,8 +78,7 @@ FUNCTION GetDiskSize& (Drive$)
   Regs.dx = (ASC(Drive$) - ASC("A") + 1)
   CALL MSDOS(Regs, Regs)
   IF Regs.ax <> &HFFFF THEN
-    c = MakeWord(Regs.dx)
-    GetDiskSize = c * Regs.ax * Regs.cx
+    GetDiskSize = MakeWord(Regs.dx) * (Regs.ax * 1!) * (Regs.cx * 1!)
   ELSE
     GetDiskSize = 0
   END IF
